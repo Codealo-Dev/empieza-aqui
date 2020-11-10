@@ -29,15 +29,14 @@ const Index: React.FC<Props> = ({ data }) => {
           <a className="underline text-blue-700 pl-2">Twitter</a>
           <a className="underline text-blue-700 pl-2">Discord</a>
         </div>
-        <h3 className="text-xl font-bold">Contenido</h3>
+        <h3 className="text-xl font-bold mb-4">Contenido</h3>
         {Object.keys(languages).map((language: string) => {
           const entries = languages[language];
           return (
             <React.Fragment key={language}>
-              <h4 id={language}>{language}</h4>
-              <div>
-                {entries.contenido}
-              </div>
+              <h4 id={language} className="text-lg font-semibold">{language}</h4>
+              <hr className="mr-4 mb-2"></hr>
+              {entries.map(e => <div>{e.content}</div>)}
             </React.Fragment>
           )
         })}
