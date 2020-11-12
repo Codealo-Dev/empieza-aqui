@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { GetStaticProps } from 'next';
 import { groupBy } from 'underscore';
+import Sidenav from '../components/Sidenav';
+import Project from '../components/Project';
 
 interface Props {
   data: any
@@ -9,45 +11,45 @@ interface Props {
 
 const Index: React.FC<Props> = ({ data }) => {
   const languages = groupBy(data, 'language');
-  console.log(languages);
+
   return (
-    <div className="max-w-screen-lg mx-auto p-4 lg:px-0 lg:flex divide-x">
-      <div className="w-3/4">
-        <h1 className="text-xl mb-4">Hola 👋, este es un documento creado por la comunidad de <a href="https://instagram.com/codealo">Codealo</a> para ayudar a personas a...</h1>
-        <ul className="list-disc pl-8 mb-4">
-          <li>Inciar su camino como programadores.</li>
-          <li>Encontrar recursos para aprender.</li>
-          <li>Obtener ideas de proyectos para sus portafolio.</li>
-          <li>Aprender sobre las diferentes ramas de programación.</li>
-          <li>Tener ayuda con entrevistas.</li>
-          <li>Consejos sobre como ser un excelente programador.</li>
-        </ul>
+    <div className="lg:px-0 lg:flex divide-x">
+      <div className="hidden lg:block w-1/4">
+        <Sidenav languages={languages} />
+      </div>
+      <div className="md:w-3/4 p-4">
+        <h1 className="text-2xl mb-4 font-bold">Idea para proyectos de programación</h1>
+        <h2 className="text-lg mb-4">Hola 👋, este es un documento creado por la comunidad de <a href="https://instagram.com/codealo">Codealo</a></h2>
+        <p className="mb-2">Por el momento esta organizado por lenguajes de programación.</p>
+        <p className="mb-2">Los proyectos son agregados por la comunidad.</p>
+        <div className="md:flex mb-4 text-center">
+          <a href="https://forms.gle/NxRscYJXuXTXoJ9VA" target="_blank">
+            <div className="bg-gray-900 px-4 py-2 text-white rounded-md">
+              Agregar un proyecto
+          </div>
+          </a>
+        </div>
         <div className="font-bold">Encuentranos</div>
         <div className="flex flex-wrap divide-x space-x-2 mb-4">
-          <a className="underline text-blue-700 ">Instagram</a>
-          <a className="underline text-blue-700 pl-2">YouTube</a>
-          <a className="underline text-blue-700 pl-2">Twitter</a>
-          <a className="underline text-blue-700 pl-2">Discord</a>
+          <a href="https://instagram.com/codealo" target="_blank" className="underline text-blue-700 ">Instagram</a>
+          <a href="https://www.youtube.com/channel/UCLdBO2AVbCohANbEtEHn1CA" target="_blank" className="underline text-blue-700 pl-2">YouTube</a>
+          <a href="https://twitter.com/codealodev" target="_blank" className="underline text-blue-700 pl-2">Twitter</a>
+          <a href="https://discord.gg/FsF3DCkP" target="_blank" className="underline text-blue-700 pl-2">Discord</a>
         </div>
+
         <h3 className="text-xl font-bold mb-4">Contenido</h3>
         {Object.keys(languages).map((language: string) => {
           const entries = languages[language];
           return (
-            <React.Fragment key={language}>
-              <h4 id={language} className="text-lg font-semibold">{language}</h4>
+            <div className="mb-6" key={language}>
+              <h4 id={language} className="text-xl font-semibold">{language}</h4>
               <hr className="mr-4 mb-2"></hr>
-              {entries.map(e => <div>{e.content}</div>)}
-            </React.Fragment>
+              <div className="space-y-4">
+                {entries.map(e => <Project data={e} />)}
+              </div>
+            </div>
           )
         })}
-      </div>
-      <div className="hidden lg:block w-1/4 px-4">
-        <div className="text-gray-900 font-bold text-lg">Tabla de contenido</div>
-        <ul className="text-gray-600">
-          {Object.keys(languages).map((l: string) => (
-            <li key={l}><a href={`#${l}`} className="underline" >{l}</a></li>
-          ))}
-        </ul>
       </div>
     </div>)
 }
@@ -56,9 +58,13 @@ const Index: React.FC<Props> = ({ data }) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   let props = { data: null, revalidate: 1 };
   try {
-    const response = await fetch('https://raw.githubusercontent.com/Codealo-Dev/empieza-aqui/main/public/data.json');
-    const data = await response.json();
-    props.data = data;
+    if (process.env.NODE_ENV === 'development') {
+      props.data = require('../public/data.json');
+    } else {
+      const response = await fetch('https://raw.githubusercontent.com/Codealo-Dev/empieza-aqui/main/public/data.json');
+      const data = await response.json();
+      props.data = data;
+    }
   } catch (err) {
 
   } finally {

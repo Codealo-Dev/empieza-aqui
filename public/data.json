@@ -1,16 +1,40 @@
 [
   {
     "language": "Python",
-    "level": "Principiante",
-    "content": "Hola Mundo",
+    "level": 1,
+    "name": "Calculadora interactiva",
+    "content": "Calculadora interactiva utilizando la consola.",
     "type": "Proyecto",
-    "url": ""
+    "rol": "Backend",
+    "url": "",
+    "username": "johnnietirado"
   },
   {
     "language": "Python",
-    "level": "Principiante",
-    "content": "Hola Mundo",
+    "level": 2,
+    "name": "Snake con PyGame",
+    "content": "Utiliza PyGame para crear un juego simple de Snake. Puedes usar solo rectangulos, pero la ídea es practicar la logica de programación y estructuras de datos.",
     "type": "Proyecto",
-    "url": ""
+    "rol": "Video Juegos",
+    "url": "",
+    "username": "johnnietirado"
+  },
+  {
+    "language": "HTML / CSS",
+    "level": 1,
+    "name": "Link Tree",
+    "content": "Usa lo básico de HTML y CSS para crear un Link Tree que incluya tu información personal. Lo puedes conectar a tu Instagram.",
+    "type": "Proyecto",
+    "url": "",
+    "username": "johnnietirado"
+  },
+  {
+    "language": "JavaScript",
+    "level": 2,
+    "name": "Página Web con NextJs",
+    "content": "Crea una página web de E-commerce utilizando NextJs",
+    "type": "Proyecto",
+    "url": "",
+    "username": "johnnietirado"
   }
 ]
